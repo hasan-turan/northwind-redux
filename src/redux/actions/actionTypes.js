@@ -1,0 +1,4 @@
+export const SELECT_CATEGORY = "SELECT_CATEGORY";
+export const LIST_CATEGORIES = "LIST_CATEGORIES";
+
+export const GET_PRODUCTS = "GET_PRODUCTS";
