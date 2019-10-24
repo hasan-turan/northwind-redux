@@ -7,6 +7,7 @@
 //  },
 //  body: JSON.stringify(product)
 import alertify from "alertifyjs";
+import { returnStatement } from "@babel/types";
 
 export const post = (url, params) => dispatch => {
   return new Promise((resolve, reject) => {
@@ -17,8 +18,10 @@ export const post = (url, params) => dispatch => {
       },
       body: JSON.stringify(params.data)
     })
-      .then(response => handleResponse(response, dispatch, params.actionType))
-      .catch(error => handleError(error));
+      .then(response =>
+        handleResponse(response, resolve, reject, dispatch, params.actionType)
+      )
+      .catch(error => handleError(error, reject));
   });
 };
 
@@ -32,29 +35,71 @@ export const put = (url, params) => dispatch => {
       body: JSON.stringify(params.data)
     })
       .then(response =>
-        handleResponse(response, resolve, dispatch, params.actionType)
+        handleResponse(response, resolve, reject, dispatch, params.actionType)
       )
       .catch(error => handleError(error, reject));
   });
 };
 
-export const get = (url, params) => dispatch => {
-  return new Promise((resolve, reject) => {
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "content-type": "application/json"
+export const get = (url, params) => {
+  return async function(dispatch) {
+    try {
+      console.log("1**");
+      let response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json"
+        }
+      });
+      let responseJSON = await response.json();
+      console.log("2**");
+      function dispatchAction(data) {
+        dispatch({
+          type: params.actionType,
+          payload: data
+        });
       }
-    })
-      .then(response =>
-        handleResponse(response, resolve, dispatch, params.actionType)
-      )
-      .catch(error => handleError(error, reject));
-  });
+      console.log("3**");
+      return dispatchAction(await responseJSON);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 };
 
-export async function handleResponse(response, resolve, dispatch, actionType) {
-  if (response.ok) {
+// return new Promise((resolve, reject) => {
+//   console.log("Promise!");
+//   fetch(url, {
+//     method: "GET",
+//     headers: {
+//       "content-type": "application/json"
+//     }
+//   })
+//     .then(response => {
+//       console.log("success ", response);
+//       return handleResponse(
+//         response,
+//         resolve,
+//         reject,
+//         dispatch,
+//         params.actionType
+//       );
+//     })
+//     .catch(error => {
+//       console.log("error", error);
+//       return handleError(error, reject);
+//     });
+// });
+export async function handleResponse(
+  response,
+  resolve,
+  reject,
+  dispatch,
+  actionType
+) {
+  if (response.error) {
+    throw new Error(response.error);
+  } else if (response.ok) {
     response.json().then(data => {
       dispatch({
         type: actionType,
@@ -69,7 +114,7 @@ export async function handleResponse(response, resolve, dispatch, actionType) {
   throw new Error(error);
 }
 
-export async function handleError(error, dispatch) {
+export async function handleError(error, reject) {
   console.log(error);
   //   return new Promise((resolve, reject) => {
   //     reject(error);

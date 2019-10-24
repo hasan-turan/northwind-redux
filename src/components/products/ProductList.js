@@ -8,7 +8,7 @@ import alertify from "alertifyjs";
 import { Link } from "react-router-dom";
 class ProductList extends Component {
   componentDidMount() {
-    this.props.actions.getProducts();
+    this.props.actions.listProducts();
   }
   addToCart = product => {
     //https://stackoverflow.com/questions/51219883/showing-success-and-error-messages-in-react-redux-app/51221734
@@ -66,13 +66,13 @@ class ProductList extends Component {
 function mapStateToProps(state) {
   return {
     currentCategory: state.selectCategoryReducer,
-    products: state.getProductReducer
+    products: state.listProductReducer
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
-      getProducts: bindActionCreators(productActions.getProducts, dispatch),
+      listProducts: bindActionCreators(productActions.listProducts, dispatch),
       addToCart: bindActionCreators(cartActions.addToCart, dispatch)
     }
   };

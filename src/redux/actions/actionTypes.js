@@ -1,7 +1,9 @@
 export const SELECT_CATEGORY = "SELECT_CATEGORY";
 export const LIST_CATEGORIES = "LIST_CATEGORIES";
 
-export const GET_PRODUCTS = "GET_PRODUCTS";
+export const LIST_PRODUCTS = "LIST_PRODUCTS";
+export const GET_PRODUCT = "GET_PRODUCT";
+
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const GET_CART = "GET_CART";

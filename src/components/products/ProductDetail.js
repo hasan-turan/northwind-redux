@@ -9,15 +9,13 @@ const ProductDetail = ({ categories, product, onSave, onChange }) => {
       <TextInput
         name="productName"
         label="Product Name"
-        placeHolder="Please Insert Name"
-        value={product.name}
+        value={product.productName}
         onChange={onChange}
         error="Hata"
       ></TextInput>
       <SelectInput
         name="categoryId"
         label="Product Category"
-        placeHolder="Please select category"
         value={product.categoryId}
         onChange={onChange}
         options={categories}
@@ -26,6 +24,27 @@ const ProductDetail = ({ categories, product, onSave, onChange }) => {
         defaultValue={7}
         error="Hata"
       ></SelectInput>
+      <TextInput
+        name="unitPrice"
+        label="Unit Price"
+        value={product.unitPrice}
+        onChange={onChange}
+        error="Hata"
+      ></TextInput>
+      <TextInput
+        name="quantityPerUnit"
+        label="Quantity per unit"
+        value={product.quantityPerUnit}
+        onChange={onChange}
+        error="Hata"
+      ></TextInput>
+      <TextInput
+        name="unitsInStock"
+        label="Units in stock"
+        value={product.unitsInStock}
+        onChange={onChange}
+        error="Hata"
+      ></TextInput>
       <button type="submit" className="btn btn-success">
         Save
       </button>

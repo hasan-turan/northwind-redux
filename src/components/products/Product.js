@@ -3,19 +3,25 @@ import { connect } from "react-redux";
 import { listCategories } from "../../redux/actions/categoryActions";
 import {
   insertProduct,
+  getProduct,
   updateProduct
 } from "../../redux/actions/productActions";
 import ProductDetail from "./ProductDetail";
 
 export function getProductById(products, productId) {
+  console.log(products);
+  console.log(productId);
   let product = products.find(p => p.id === productId) || null;
   return product;
 }
-
+/**
+ *  properties comes from mapStateToProps like: products, categories,
+ *  actions comes from mapDispatchToProps like : getProduct,listCategories,insertProduct,updateProduct,
+ */
 function Product({
   products,
   categories,
-  getProducts,
+  getProduct,
   listCategories,
   insertProduct,
   updateProduct,
@@ -63,15 +69,21 @@ function Product({
 const mapsDispatchToProps = {
   listCategories,
   insertProduct,
+  getProduct,
   updateProduct
 };
 
 function mapStateToProps(state, ownProps) {
-  const productId = ownProps.match.params.productId;
-  const product =
-    productId && state.productReducer.length > 0
-      ? getProductById(state.productReducer, productId)
-      : {};
+  //ownProps.match.params.productId is parameter from query string
+  const productId = parseInt(ownProps.match.params.productId);
+  // //if productId exists in querstring and data returned from state.getProductReducer
+  // //then filter product inside
+  // const product =
+  //   productId && state.getProductReducer.length > 0
+  //     ? getProductById(state.getProductReducer, productId)
+  //     : {};
+  const product = getProduct(productId);
+
   return {
     product,
     products: state.getProductReducer,
