@@ -1,12 +1,21 @@
 import React, { Component } from "react";
-import { bindActionCreators } from "C:/Users/hasan.turan/AppData/Local/Microsoft/TypeScript/3.6/node_modules/redux";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as productActions from "../../redux/actions/productActions";
-import { Table } from "reactstrap";
+import * as cartActions from "../../redux/actions/cartActions";
+import { Table, Button } from "reactstrap";
+import alertify from "alertifyjs";
+import { Link } from "react-router-dom";
 class ProductList extends Component {
   componentDidMount() {
     this.props.actions.getProducts();
   }
+  addToCart = product => {
+    //https://stackoverflow.com/questions/51219883/showing-success-and-error-messages-in-react-redux-app/51221734
+    this.props.actions.addToCart(product).then(response => {
+      alertify.success(product.productName + " added to cart!", 2);
+    });
+  };
   render() {
     let title = "Product List";
     if (this.props.currentCategory)
@@ -22,16 +31,29 @@ class ProductList extends Component {
               <th>Unit Price</th>
               <th>Qunatity Per Unit</th>
               <th>Units In Stock</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {this.props.products.map(product => (
               <tr key={product.id}>
                 <th scope="row">{product.id}</th>
-                <td>{product.productName}</td>
+                <td>
+                  <Link to={"/product/" + product.id}>
+                    {product.productName}
+                  </Link>
+                </td>
                 <td>{product.unitPrice} </td>
                 <td>{product.quantityPerUnit} </td>
                 <td>{product.unitsInStock} </td>
+                <td>
+                  <Button
+                    color="success"
+                    onClick={() => this.addToCart(product)}
+                  >
+                    Add
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -50,7 +72,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
-      getProducts: bindActionCreators(productActions.getProducts, dispatch)
+      getProducts: bindActionCreators(productActions.getProducts, dispatch),
+      addToCart: bindActionCreators(cartActions.addToCart, dispatch)
     }
   };
 }

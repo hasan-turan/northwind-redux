@@ -1,15 +1,29 @@
-import React from "react";
 import { Container } from "reactstrap";
 import Navigation from "../navi/Navigation";
 import Dashboard from "./Dashboard";
+import { withRouter } from "react-router";
+import React, { Component } from "react";
+import { Switch, Route } from "react-router-dom";
+import CartDetail from "../cart/CartDetail";
+import NotFound from "../common/NotFound";
+import Product from "../products/Product";
 
-function App() {
-  return (
-    <Container>
-      <Navigation />
-      <Dashboard />
-    </Container>
-  );
+class App extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        <Container>
+          <Navigation />
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/product/:id" component={Product} />
+            <Route exact path="/cart/detail" component={CartDetail} />
+            <Route component={NotFound} />
+          </Switch>
+        </Container>
+      </React.Fragment>
+    );
+  }
 }
 
-export default App;
+export default withRouter(App);
