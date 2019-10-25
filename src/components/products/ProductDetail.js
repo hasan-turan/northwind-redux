@@ -2,7 +2,7 @@ import React from "react";
 import TextInput from "../toolbox/TextInput";
 import SelectInput from "../toolbox/SelectInput";
 
-const ProductDetail = ({ categories, product, onSave, onChange }) => {
+const ProductDetail = ({ categories, product, onSave, onChange, valid }) => {
   return (
     <form onSubmit={onSave}>
       <h2>{product.id ? "Güncelle" : "Ekle"}</h2>
@@ -11,7 +11,8 @@ const ProductDetail = ({ categories, product, onSave, onChange }) => {
         label="Product Name"
         value={product.productName}
         onChange={onChange}
-        error="Hata"
+        isrequired="true"
+        valid={valid}
       ></TextInput>
       <SelectInput
         name="categoryId"
@@ -21,29 +22,30 @@ const ProductDetail = ({ categories, product, onSave, onChange }) => {
         options={categories}
         valueField="id"
         displayField="categoryName"
-        defaultValue={7}
-        error="Hata"
+        defaultValue={0}
+        isrequired="true"
+        valid={valid}
       ></SelectInput>
       <TextInput
         name="unitPrice"
         label="Unit Price"
         value={product.unitPrice}
         onChange={onChange}
-        error="Hata"
+        valid={valid}
       ></TextInput>
       <TextInput
         name="quantityPerUnit"
         label="Quantity per unit"
         value={product.quantityPerUnit}
         onChange={onChange}
-        error="Hata"
+        valid={valid}
       ></TextInput>
       <TextInput
         name="unitsInStock"
         label="Units in stock"
         value={product.unitsInStock}
         onChange={onChange}
-        error="Hata"
+        valid={valid}
       ></TextInput>
       <button type="submit" className="btn btn-success">
         Save

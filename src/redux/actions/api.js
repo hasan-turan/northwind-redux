@@ -27,6 +27,7 @@ export const post = (url, params) => dispatch => {
 
 export const put = (url, params) => dispatch => {
   return new Promise((resolve, reject) => {
+    console.log("action ", params.actionType);
     fetch(url + "/" + params.data, {
       method: "PUT",
       headers: {
@@ -42,30 +43,59 @@ export const put = (url, params) => dispatch => {
 };
 
 export const get = (url, params) => {
-  return async function(dispatch) {
+  return function(dispatch) {
     try {
+      debugger;
       console.log("1**");
-      let response = await fetch(url, {
+      fetch(url, {
         method: "GET",
         headers: {
           "content-type": "application/json"
         }
-      });
-      let responseJSON = await response.json();
-      console.log("2**");
-      function dispatchAction(data) {
-        dispatch({
-          type: params.actionType,
-          payload: data
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log("2**");
+          return dispatch({
+            type: params.actionType,
+            payload: data
+          });
         });
-      }
-      console.log("3**");
-      return dispatchAction(await responseJSON);
     } catch (error) {
-      console.error(error);
+      console.log("3**", error);
+      return dispatch({
+        type: params.actionType,
+        payload: {}
+      });
     }
   };
 };
+
+// export const get = (url, params) => {
+//   return async function(dispatch) {
+//     try {
+//       console.log("1**");
+//       let response = await fetch(url, {
+//         method: "GET",
+//         headers: {
+//           "content-type": "application/json"
+//         }
+//       });
+//       let responseJSON = await response.json();
+//       console.log("2**");
+//       function dispatchAction(data) {
+//         dispatch({
+//           type: params.actionType,
+//           payload: data
+//         });
+//       }
+//       console.log("3**");
+//       return dispatchAction(await responseJSON);
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+// };
 
 // return new Promise((resolve, reject) => {
 //   console.log("Promise!");

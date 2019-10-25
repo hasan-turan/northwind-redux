@@ -23,6 +23,11 @@ class ProductList extends Component {
     return (
       <div>
         {title}
+        <Button color="success float-right">
+          <Link to="/product/new" className="Link">
+            Add New Product
+          </Link>
+        </Button>
         <Table>
           <thead>
             <tr>
@@ -39,7 +44,7 @@ class ProductList extends Component {
               <tr key={product.id}>
                 <th scope="row">{product.id}</th>
                 <td>
-                  <Link to={"/product/" + product.id}>
+                  <Link to={"/product/update/" + product.id}>
                     {product.productName}
                   </Link>
                 </td>

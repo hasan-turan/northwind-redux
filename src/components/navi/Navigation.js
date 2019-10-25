@@ -1,51 +1,37 @@
-import React, { useState, Component } from "react";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown
-} from "reactstrap";
+import React, { useState } from "react";
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav } from "reactstrap";
 import CartSummary from "../cart/CartSummary";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-class Navigation extends Component {
-  state = {
-    isOpen: false
-  };
-  toggle = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    setIsOpen(!isOpen);
-    this.setState({
-      isOpen
-    });
-  };
-  render() {
-    return (
-      <div>
-        <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">React Redux Example</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/components/">Components</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">
-                  GitHub
-                </NavLink>
-              </NavItem>
+function Navigation({ history }) {
+  const [isOpen, setIsOpen] = useState(false);
 
-              <CartSummary />
-            </Nav>
-          </Collapse>
-        </Navbar>
-      </div>
-    );
+  function gotoHome() {
+    if (history) history.push("/");
   }
+  function toggle() {
+    setIsOpen(!isOpen);
+  }
+
+  return (
+    <div>
+      <Navbar color="light" light expand="md">
+        <NavbarBrand onClick={gotoHome}>Home</NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="ml-auto" navbar>
+            <CartSummary />
+          </Nav>
+        </Collapse>
+      </Navbar>
+    </div>
+  );
 }
 
-export default Navigation;
+export default withRouter(
+  connect(
+    null,
+    null
+  )(Navigation)
+);

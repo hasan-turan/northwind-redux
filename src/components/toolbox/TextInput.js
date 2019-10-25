@@ -1,14 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const TextInput = ({ name, label, onChange, placeHolder, value, error }) => {
+const TextInput = ({
+  name,
+  label,
+  onChange,
+  placeHolder,
+  value,
+  error,
+  valid,
+  isrequired
+}) => {
   let wrapperClass = "form-group";
   if (error && error.length > 0) {
     wrapperClass += " has-error";
   }
 
+  const requiredMsg = "This field is is required";
+  const [newlabel, setLabel] = useState(label);
+  const [requiredMessage, setRequiredMessage] = useState("");
+
+  useEffect(() => {
+    async function prepareLabel() {
+      if (isrequired) {
+        setLabel(
+          <span>
+            <span>{label}</span>
+            <span style={{ color: "red" }}>*</span>
+          </span>
+        );
+      } else {
+        setLabel(<span>{label}</span>);
+      }
+    }
+    async function prepareRequiredMessage() {
+      if (isrequired && !value) {
+        setRequiredMessage(
+          <div className="alert alert-danger">
+            {error ? error : requiredMsg}
+          </div>
+        );
+      }
+    }
+    prepareLabel();
+    prepareRequiredMessage();
+  }, [setLabel, setRequiredMessage]);
+
   return (
     <div className={wrapperClass}>
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name}>{newlabel}</label>
       <div className="field">
         <input
           type="text"
@@ -16,8 +55,9 @@ const TextInput = ({ name, label, onChange, placeHolder, value, error }) => {
           placeholder={placeHolder}
           onChange={onChange}
           value={value}
+          isrequired={isrequired}
         />
-        {error && <div className="alert alert-danger">{error}</div>}
+        {requiredMessage}
       </div>
     </div>
   );

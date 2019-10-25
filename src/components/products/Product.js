@@ -7,11 +7,11 @@ import {
   updateProduct
 } from "../../redux/actions/productActions";
 import ProductDetail from "./ProductDetail";
-
+import initialState from "../../redux/store/initialState";
+import alertify from "alertifyjs";
 export function getProductById(products, productId) {
-  console.log(products);
-  console.log(productId);
-  let product = products.find(p => p.id === productId) || null;
+  let product = products.find(p => p.id === parseInt(productId)) || null;
+  console.log(" getProductById ", product);
   return product;
 }
 /**
@@ -21,7 +21,7 @@ export function getProductById(products, productId) {
 function Product({
   products,
   categories,
-  getProduct,
+  listProduct,
   listCategories,
   insertProduct,
   updateProduct,
@@ -29,6 +29,7 @@ function Product({
   ...props
 }) {
   const [product, setProduct] = useState({ ...props.product });
+  const [valid, setValid] = useState(false);
   useEffect(() => {
     if (categories.length === 0) {
       listCategories();
@@ -37,21 +38,34 @@ function Product({
   }, [props.product]);
 
   function handleChange(event) {
-    const { name, value } = event;
-    setProduct(previousProduct => ({
-      ...previousProduct,
-      [name]: name === "categoryId" ? parseInt(value, 10) : value //if field name is categoryId then parseInt else set value to field
+    let { name, value } = event.target;
+    if (name === "categoryId") value = parseInt(value, 10);
+    /**
+     * A component is changing an uncontrolled input of type text to be controlled.
+     * Input elements should not switch from uncontrolled to controlled (or vice versa).
+     * Decide between using a controlled or uncontrolled input element for the lifetime of
+     * the component. More info: https://fb.me/react-controlled-components
+     * for this error we have to initialize object with properties like in initialize.product
+     */
+
+    setProduct(prevState => ({
+      ...prevState,
+      [name]: value
     }));
   }
 
   function handleSave(event) {
     event.preventDefault();
-    if (product.id === 0) {
+    if (!valid) {
+      alertify.error("Please fill all required fields");
+      return;
+    }
+    if (!product.id) {
       insertProduct(product).then(() => {
         history.push("/");
       });
     } else {
-      updateProduct(product.id).then(() => {
+      updateProduct(product).then(() => {
         history.push("/");
       });
     }
@@ -62,6 +76,7 @@ function Product({
       categories={categories}
       onChange={handleChange}
       onSave={handleSave}
+      valid={valid}
     />
   );
 }
@@ -75,18 +90,17 @@ const mapsDispatchToProps = {
 
 function mapStateToProps(state, ownProps) {
   //ownProps.match.params.productId is parameter from query string
-  const productId = parseInt(ownProps.match.params.productId);
-  // //if productId exists in querstring and data returned from state.getProductReducer
-  // //then filter product inside
-  // const product =
-  //   productId && state.getProductReducer.length > 0
-  //     ? getProductById(state.getProductReducer, productId)
-  //     : {};
-  const product = getProduct(productId);
+  const { productId } = ownProps.match.params; //parseInt(ownProps.match.params.productId);
+  //if productId exists in querstring and data returned from state.getProductReducer
+  //then filter product inside
+  const product =
+    productId && state.listProductReducer.length > 0
+      ? getProductById(state.listProductReducer, productId)
+      : initialState.product;
 
   return {
     product,
-    products: state.getProductReducer,
+    products: state.listProductReducer,
     categories: state.listCategoryReducer
   };
 }

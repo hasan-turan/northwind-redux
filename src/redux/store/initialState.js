@@ -4,5 +4,13 @@ export default {
   products: [],
   cart: [],
   savedProduct: {},
-  product: []
+
+  product: {
+    id: undefined,
+    categoryId: 0,
+    productName: "",
+    quantityPerUnit: "",
+    unitPrice: "",
+    unitsInStock: ""
+  }
 };

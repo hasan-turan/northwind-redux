@@ -16,7 +16,8 @@ class App extends Component {
           <Navigation />
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route exact path="/product/:productId" component={Product} />
+            <Route path="/product/new" component={Product} />
+            <Route path="/product/update/:productId" component={Product} />
             <Route exact path="/cart/detail" component={CartDetail} />
             <Route component={NotFound} />
           </Switch>
