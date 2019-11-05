@@ -30,6 +30,8 @@ function Product({
 }) {
   const [product, setProduct] = useState({ ...props.product });
   const [valid, setValid] = useState(false);
+  //useEffect:equivalent of ComponentDidMount
+  //useState:equivalent of SetState
   useEffect(() => {
     if (categories.length === 0) {
       listCategories();
