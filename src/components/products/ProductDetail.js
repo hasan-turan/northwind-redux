@@ -47,6 +47,13 @@ const ProductDetail = ({ categories, product, onSave, onChange, valid }) => {
         onChange={onChange}
         valid={valid}
       ></TextInput>
+      <TextInput
+        name="imageUrl"
+        label="Image url"
+        value={product.imageUrl}
+        onChange={onChange}
+        valid={valid}
+      ></TextInput>
       <button type="submit" className="btn btn-success">
         Save
       </button>

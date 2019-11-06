@@ -7,6 +7,7 @@ import { Switch, Route } from "react-router-dom";
 import CartDetail from "../cart/CartDetail";
 import NotFound from "../common/NotFound";
 import Product from "../products/Product";
+import { ProductHooks } from "../products/ProductHooks";
 
 class App extends Component {
   render() {
@@ -15,6 +16,12 @@ class App extends Component {
         <Container>
           <Navigation />
           <Switch>
+            <Route exact path="/productredux" component={Product} />
+            <Route exact path="/producthooks" component={ProductHooks} />
+            <Route
+              path="/producthooks/update/:productId"
+              component={ProductHooks}
+            />
             <Route exact path="/" component={Dashboard} />
             <Route path="/product/new" component={Product} />
             <Route path="/product/update/:productId" component={Product} />

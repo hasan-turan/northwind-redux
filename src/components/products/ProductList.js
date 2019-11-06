@@ -59,6 +59,11 @@ class ProductList extends Component {
                     Add
                   </Button>
                 </td>
+                <td>
+                  <Link to={"/producthooks/update/" + product.id}>
+                    Hooks update
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>

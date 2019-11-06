@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { ProductContext } from "../products/contexts/ProductContext";
 
 const TextInput = ({
   name,
@@ -34,6 +35,7 @@ const TextInput = ({
     }
     async function prepareRequiredMessage() {
       if (isrequired && !value) {
+        console.log("name value", name, value);
         setRequiredMessage(
           <div className="alert alert-danger">
             {error ? error : requiredMsg}

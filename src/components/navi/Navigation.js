@@ -7,8 +7,8 @@ import { connect } from "react-redux";
 function Navigation({ history }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  function gotoHome() {
-    if (history) history.push("/");
+  function gotoPath(path) {
+    if (history) history.push(path);
   }
   function toggle() {
     setIsOpen(!isOpen);
@@ -17,7 +17,14 @@ function Navigation({ history }) {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand onClick={gotoHome}>Home</NavbarBrand>
+        <NavbarBrand onClick={() => gotoPath("/")}>Home</NavbarBrand>
+        <NavbarBrand onClick={() => gotoPath("/producthooks")}>
+          Product With Hooks
+        </NavbarBrand>
+
+        <NavbarBrand onClick={() => gotoPath("/productredux")}>
+          Product With Redux
+        </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>

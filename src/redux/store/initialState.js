@@ -6,11 +6,12 @@ export default {
   savedProduct: {},
 
   product: {
-    id: undefined,
+    id: 0,
     categoryId: 0,
     productName: "",
     quantityPerUnit: "",
     unitPrice: "",
-    unitsInStock: ""
+    unitsInStock: "",
+    imageUrl: ""
   }
 };

@@ -82,34 +82,40 @@ export const updateProduct = product => dispatch => {
   return response;
 };
 
-export const getProduct = id => {
-  const url = "http://localhost:3000/products?id=" + id;
-  // api.get("http://localhost:3000/products?id=" + id, {
-  //   actionType: actionTypes.GET_PRODUCT
-  // });
+//   const getProduct = async  id => dispatch => {
+//   const url = "http://localhost:3000/products?id=" + id;
 
-  return function(dispatch) {
-    try {
-      console.log("1**");
-      fetch(url, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json"
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          return dispatch({
-            type: actionTypes.GET_PRODUCT,
-            payload: data
-          });
-        });
-    } catch (error) {
-      console.error(error);
-      return dispatch({
-        type: actionTypes.GET_PRODUCT,
-        payload: {}
-      });
+//  const json= await fetch(url, {
+//     method: "GET",
+//     headers: {
+//       "content-type": "application/json"
+//     }
+//   });
+
+// };
+
+// export async function getProduct(id) {
+//   const url = "http://localhost:3000/products?id=" + id;
+//   const response = await fetch(url, {
+//     method: "GET",
+//     headers: {
+//       "content-type": "application/json"
+//     }
+//   });
+//   const data = await response.json();
+//   console.log(" getProduct data", data);
+//   return data;
+// }
+
+export async function getProduct(id) {
+  const url = "http://localhost:3000/products?id=" + id;
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json"
     }
-  };
-};
+  });
+  const data = await response.json();
+
+  return data;
+}
