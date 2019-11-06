@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/root/App";
 import * as serviceWorker from "./serviceWorker";
+import { Applicationcontext } from "./redux/context/applicationcontenxt";
 import { Provider } from "react-redux";
 import configureStore from "./redux/store/configureStore";
 import { BrowserRouter } from "react-router-dom";
@@ -13,7 +14,9 @@ const store = configureStore();
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <Applicationcontext.Provider value={{ store }}>
+        <App />
+      </Applicationcontext.Provider>
     </Provider>
   </BrowserRouter>,
   document.getElementById("root")
