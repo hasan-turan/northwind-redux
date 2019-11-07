@@ -16,17 +16,8 @@ const SelectInput = ({
   const [newlabel, setLabel] = useState(label);
   const [requiredMessage, setRequiredMessage] = useState("");
   const requiredMsg = "This field is is required";
-  const { categories } = useContext(ProductContext);
-  const [categories2, setCategories] = useState(categories);
 
   useEffect(() => {
-    setCategories([
-      {
-        id: 1,
-        categoryName: "bbbbb"
-      },
-      ...categories2
-    ]);
     async function prepareLabel() {
       if (isrequired) {
         setLabel(
@@ -50,7 +41,7 @@ const SelectInput = ({
     }
     prepareLabel();
     prepareRequiredMessage();
-  }, [setLabel, setRequiredMessage, setCategories]);
+  }, [setLabel, setRequiredMessage]);
   return (
     <div className="form-group">
       <label htmlFor={name}>{newlabel}</label>
@@ -62,7 +53,7 @@ const SelectInput = ({
         isrequired={isrequired}
       >
         <option value="">Please select</option>
-        {categories2.map(option => {
+        {options.map(option => {
           return (
             <option key={option[valueField]} value={option[valueField]}>
               {option[displayField]}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useStateWithCallback from "use-state-with-callback";
 import { useDispatch, useSelector } from "react-redux";
 import ProductDetail from "./ProductDetail";
-import { listCategories } from "../../redux/actions/categoryActions";
+import { listCategoriesAsync } from "../../redux/actions/categoryActions";
 import { getProduct } from "../../redux/actions/productActions";
 import initialState from "../../redux/store/initialState";
 import ProductDetailHooks from "./ProductDetailHooks";
@@ -23,7 +23,7 @@ export const ProductHooks = ({ ...props }) => {
   useEffect(() => {
     const productId = props.match.params.productId;
 
-    listCategories("ProductHooks").then(categories =>
+    listCategoriesAsync("ProductHooks").then(categories =>
       setCategories(categories)
     );
 

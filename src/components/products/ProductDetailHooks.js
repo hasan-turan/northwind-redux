@@ -4,11 +4,11 @@ import { bindActionCreators } from "redux";
 import TextInput from "../toolbox/TextInput";
 import SelectInput from "../toolbox/SelectInput";
 import initialState from "../../redux/store/initialState";
-import { listCategories } from "../../redux/actions/categoryActions";
+import { listCategoriesAsync } from "../../redux/actions/categoryActions";
 import listCategoryReducer from "../../redux/reducers/listCategoryReducer";
 import { ProductContext } from "./contexts/ProductContext";
 import { Applicationcontext } from "../../redux/context/applicationcontenxt";
-function ProductDetailHooks({ product, onSave, onChange, valid, ...props }) {
+function ProductDetailHooks({ product, onSave, onChange, valid }) {
   // const [categories, setCategories] = useStateWithCallback(
   //   initialState.categories,
   //   categories => writeToConsole(categories)
@@ -16,8 +16,8 @@ function ProductDetailHooks({ product, onSave, onChange, valid, ...props }) {
   // const dispatch = useDispatch();
   //   const categories2 = useSelector(state => state.listCategoryReducer);
   const { categories } = useContext(ProductContext);
-  const { store } = useContext(Applicationcontext);
-  console.log("Application store", store);
+  //const { store } = useContext(Applicationcontext);
+
   const [categories1, setCategories] = useState(categories);
   useEffect(() => {
     console.log("Initial categories", categories);

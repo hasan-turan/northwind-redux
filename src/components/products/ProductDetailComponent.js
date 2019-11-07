@@ -2,7 +2,7 @@ import React from "react";
 import TextInput from "../toolbox/TextInput";
 import SelectInput from "../toolbox/SelectInput";
 import initialState from "../../redux/store/initialState";
-import { listCategories } from "../../redux/actions/categoryActions";
+import { listCategoriesAsync } from "../../redux/actions/categoryActions";
 
 class ProductDetailComponent extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class ProductDetailComponent extends React.Component {
     };
   }
   componentDidMount() {
-    listCategories().then(categories => {
+    listCategoriesAsync().then(categories => {
       this.setState(categories, () => {
         console.log("11111 categories", categories);
       });

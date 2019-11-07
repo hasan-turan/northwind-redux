@@ -20,7 +20,7 @@ export function listCategories2() {
   };
 }
 
-export async function listCategories(caller) {
+export async function listCategoriesAsync(caller) {
   console.log("Caller ", caller);
   const url = "http://localhost:3000/categories";
   const response = await fetch(url, {
@@ -34,17 +34,17 @@ export async function listCategories(caller) {
   return data;
 }
 
-// export function listCategories(caller) {
-//   console.log("Caller ", caller);
-//   return function(dispatch) {
-//     let url = "http://localhost:3000/categories";
-//     return fetch(url)
-//       .then(response => response.json())
-//       .then(data =>
-//         dispatch({
-//           type: actionTypes.LIST_CATEGORIES,
-//           payload: data
-//         })
-//       );
-//   };
-// }
+export function listCategories(caller) {
+  console.log("Caller ", caller);
+  return function(dispatch) {
+    let url = "http://localhost:3000/categories";
+    return fetch(url)
+      .then(response => response.json())
+      .then(data =>
+        dispatch({
+          type: actionTypes.LIST_CATEGORIES,
+          payload: data
+        })
+      );
+  };
+}
